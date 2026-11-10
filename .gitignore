@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+release/
+
+# logs & local junk
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+
+# never commit keys. The app stores its config in the OS user-data folder, not here.
+config.json
+cache.json
+.env

@@ -1,0 +1,45 @@
+{
+  "name": "akari-overlay",
+  "productName": "Akari Overlay",
+  "version": "0.1.0",
+  "description": "Lightweight Hypixel Bedwars stats overlay. Reads your Minecraft client's latest.log and nothing else: no injection, no memory reading, no client modification.",
+  "main": "dist/main/main.js",
+  "license": "MIT",
+  "author": "akari-11",
+  "repository": "github:akari-11/akari-overlay",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-static.js",
+    "start": "npm run build && electron .",
+    "test": "npm run build && node --test \"dist/core/*.test.js\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dist": "npm run build && electron-builder"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.7.2"
+  },
+  "build": {
+    "appId": "dev.akari.overlay",
+    "productName": "Akari Overlay",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "!dist/**/*.test.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}

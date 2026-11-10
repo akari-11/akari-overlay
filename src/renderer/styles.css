@@ -1,0 +1,343 @@
+:root {
+  --bg-alpha: 0.85;
+  --bg: rgba(14, 16, 22, var(--bg-alpha));
+  --bar: rgba(255, 255, 255, 0.04);
+  --line: rgba(255, 255, 255, 0.08);
+  --fg: #e8eaf0;
+  --muted: #8b90a0;
+  --accent: #7aa2ff;
+  --low: #7bd88f;
+  --medium: #f2d16b;
+  --high: #ff9f5a;
+  --extreme: #ff5c6c;
+  --nick: #c58bff;
+  --unknown: #8b90a0;
+  --font: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'Cascadia Mono', 'JetBrains Mono', Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: transparent;
+  color: var(--fg);
+  font: 12.5px/1.35 var(--font);
+  user-select: none;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ---- top bar ---------------------------------------------------------- */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 6px 12px;
+  background: var(--bar);
+  border-bottom: 1px solid var(--line);
+  -webkit-app-region: drag;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.status {
+  flex: 1;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status.live::before {
+  content: '●';
+  color: var(--low);
+  margin-right: 6px;
+}
+
+.status.idle::before {
+  content: '○';
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.actions {
+  display: flex;
+  gap: 2px;
+  -webkit-app-region: no-drag;
+}
+
+button {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  width: 26px;
+  height: 22px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--fg);
+}
+
+button.primary {
+  width: auto;
+  padding: 0 12px;
+  background: var(--accent);
+  color: #0b0d14;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* ---- settings --------------------------------------------------------- */
+.settings {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.settings label {
+  display: grid;
+  gap: 3px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.settings label.row {
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+}
+
+.settings input[type='text'],
+.settings input[type='password'] {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--fg);
+  padding: 5px 8px;
+  font: 12px var(--mono);
+  outline: none;
+}
+
+.settings input:focus {
+  border-color: var(--accent);
+}
+
+.settings-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings a {
+  color: var(--accent);
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.settings a:hover {
+  text-decoration: underline;
+}
+
+/* ---- table ------------------------------------------------------------ */
+main {
+  flex: 1;
+  overflow: auto;
+}
+
+main::-webkit-scrollbar {
+  width: 6px;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 4px 8px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+th.left,
+td.left {
+  text-align: left;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(20, 22, 30, 0.95);
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 11px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+}
+
+thead th.sorted::after {
+  content: ' ▾';
+  color: var(--accent);
+}
+
+thead th.sorted.asc::after {
+  content: ' ▴';
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+tbody tr.dead {
+  opacity: 0.45;
+}
+
+tbody tr.dead td.left {
+  text-decoration: line-through;
+}
+
+tbody tr.disconnected td.left::after {
+  content: ' ⚡';
+  color: var(--muted);
+}
+
+tbody tr.self td.left {
+  color: var(--accent);
+}
+
+tbody tr.cached td.left::before {
+  content: '';
+}
+
+.rank {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  vertical-align: 1px;
+}
+
+.tag {
+  display: inline-block;
+  min-width: 52px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+tr.threat-low .tag {
+  color: var(--low);
+  background: color-mix(in srgb, var(--low) 14%, transparent);
+}
+tr.threat-medium .tag {
+  color: var(--medium);
+  background: color-mix(in srgb, var(--medium) 14%, transparent);
+}
+tr.threat-high .tag {
+  color: var(--high);
+  background: color-mix(in srgb, var(--high) 14%, transparent);
+}
+tr.threat-extreme .tag {
+  color: var(--extreme);
+  background: color-mix(in srgb, var(--extreme) 16%, transparent);
+}
+tr.threat-nick .tag {
+  color: var(--nick);
+  background: color-mix(in srgb, var(--nick) 16%, transparent);
+}
+tr.threat-unknown .tag {
+  color: var(--unknown);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+tr.threat-extreme td.fkdr,
+tr.threat-extreme td.star {
+  color: var(--extreme);
+}
+tr.threat-high td.fkdr,
+tr.threat-high td.star {
+  color: var(--high);
+}
+
+td.dim {
+  color: var(--muted);
+}
+
+.empty {
+  margin: 0;
+  padding: 24px 12px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.empty code {
+  font-family: var(--mono);
+  color: var(--fg);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---- footer ----------------------------------------------------------- */
+.message {
+  padding: 5px 12px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 92, 108, 0.12);
+  color: #ffb3bb;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message.info {
+  background: rgba(122, 162, 255, 0.1);
+  color: #b9ccff;
+}

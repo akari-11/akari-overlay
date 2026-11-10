@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:" />
+    <title>Akari Overlay</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="bar">
+        <span class="brand">Akari</span>
+        <span id="status" class="status">starting…</span>
+        <div class="actions">
+          <button id="btn-refresh" title="Refresh stats (Ctrl+Shift+F)">↻</button>
+          <button id="btn-reset" title="Clear table (Ctrl+Shift+R)">⌫</button>
+          <button id="btn-settings" title="Settings">⚙</button>
+          <button id="btn-min" title="Minimize">–</button>
+          <button id="btn-close" title="Quit">×</button>
+        </div>
+      </header>
+
+      <section id="settings" class="settings hidden">
+        <label>
+          <span>Hypixel API key</span>
+          <input id="in-key" type="password" autocomplete="off" spellcheck="false" placeholder="paste your developer key" />
+        </label>
+        <label>
+          <span>Log file</span>
+          <input id="in-log" type="text" autocomplete="off" spellcheck="false" placeholder="…/.minecraft/logs/latest.log" />
+        </label>
+        <label class="row">
+          <span>Opacity</span>
+          <input id="in-opacity" type="range" min="0.1" max="1" step="0.05" />
+        </label>
+        <label class="row">
+          <span>Always on top</span>
+          <input id="in-top" type="checkbox" />
+        </label>
+        <div class="settings-actions">
+          <a id="link-key" href="#">Get a key at developer.hypixel.net</a>
+          <button id="btn-save" class="primary">Save</button>
+        </div>
+      </section>
+
+      <main>
+        <table id="table">
+          <thead>
+            <tr>
+              <th data-sort="name" class="left">Player</th>
+              <th data-sort="star" title="Bedwars level">★</th>
+              <th data-sort="fkdr" title="Final kill / death ratio">FKDR</th>
+              <th data-sort="finalKills" title="Final kills">Finals</th>
+              <th data-sort="wins">Wins</th>
+              <th data-sort="wlr" title="Win / loss ratio">WLR</th>
+              <th data-sort="winstreak" title="Winstreak">WS</th>
+              <th data-sort="threat">Tag</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p id="empty" class="empty">Join a Bedwars lobby, or type <code>/who</code> in game.</p>
+      </main>
+
+      <footer id="message" class="message hidden"></footer>
+    </div>
+    <script src="renderer.js"></script>
+  </body>
+</html>
