@@ -113,15 +113,25 @@ before use.
 
 ## Getting a Hypixel API key
 
-1. Go to <https://developer.hypixel.net/> and sign in with your Minecraft
-   account.
-2. **Development key**: available instantly from the dashboard, valid for
-   24 hours, renewable. Fine for personal use.
-3. **Production key**: apply from the same dashboard if you want a key that
-   does not expire. The *Architecture*, *Caching* and *Rate limiting* sections
-   above describe exactly what this tool does with the key; link to this
-   README in your application.
-4. Paste the key into the overlay: click ⚙ → *Hypixel API key* → *Save*.
+Every user needs their **own** key. Hypixel does not allow keys to be shared
+with or embedded in third-party tools, so this project never ships one.
+
+1. Go to <https://developer.hypixel.net/dashboard> and sign in with your
+   Minecraft account.
+2. *Create App* → choose **Personal API Key**. It is meant for individual,
+   non-monetized projects like this one and has the default rate limit, which
+   the overlay stays under by design.
+3. Describe the app briefly. Something like: *"Personal Bedwars stats
+   overlay. Reads my client's latest.log to find players in my game, queries
+   `/v2/player` once per player, caches results locally for 30 minutes and
+   rate-limits requests to ~0.9/s. No client modification."* Link to this
+   README; the *Caching* and *Rate limiting* sections above describe exactly
+   what the key is used for.
+4. Once approved, copy the key and paste it into the overlay:
+   click ⚙ → *Hypixel API key* → *Save*.
+
+Only pick *Production API Key* if you are building something monetized or
+team-managed, or need a higher rate limit; it needs a longer review.
 
 ---
 
